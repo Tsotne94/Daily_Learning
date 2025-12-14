@@ -5,6 +5,10 @@ public struct Stack<Element> {
 
     public init() { }
 
+    public init(_ elements: [Element]) {
+        storage = elements
+    }
+
     public mutating func push(_ element: Element) {
         storage.append(element)
     }
@@ -29,6 +33,12 @@ extension Stack: CustomDebugStringConvertible {
         ----top----
         \(storage.map { "\($0)" }.reversed().joined(separator:"\n"))
         """
+    }
+}
+
+extension Stack: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: Element...) {
+        storage = elements
     }
 }
 
