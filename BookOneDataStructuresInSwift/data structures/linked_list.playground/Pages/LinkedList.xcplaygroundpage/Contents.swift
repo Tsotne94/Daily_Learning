@@ -425,26 +425,21 @@ exercise2()
 
 func exercise3() {
     print("\n\n\n\n\n")
-
     var originalList: LinkedList = [1, 2, 3, 4, 5, 7]
 
-    var currentNode = originalList.head
-    var prev: Node<Int>?
-    var next: Node<Int>?
+    var prev: Node<Int>? = nil
+    var next: Node<Int>? = nil
+    var current = originalList.head
 
-    while currentNode != nil {
-        next = currentNode?.next
-        currentNode?.next = prev
-        prev = currentNode
-        currentNode = next
+    while current != nil {
+        next = current?.next
+        current?.next = prev
+        prev = current
+        current = next
     }
-
     originalList.head = prev
-
     print(originalList)
 }
-
-// დამტანჯა ამან, უნდა დავუბრუნდე, ვერ ვიგებ ნორმალურად.
 
 exercise3()
 /*
@@ -464,17 +459,47 @@ exercise3()
 
 func exercise4() {
     var firstList: LinkedList = [1, 2, 3, 4, 5]
-    var secondlist: LinkedList = [5, 6, 7, 8, 9, 10]
+    var secondList: LinkedList = [5, 6, 7, 8, 9, 10]
 
-    var firstListNode = firstList.head
-    var secondlistNode = secondlist.head
+    var firstNode = firstList.head
+    var secondNode = secondList.head
 
-    while firstListNode != nil || secondlistNode != nil {
-        let first = firstListNode?.value
-        let second = secondlistNode?.value
+    var mergedList = LinkedList<Int>()
 
+    if firstNode!.value < secondNode!.value {
+        mergedList.head = firstNode
+        firstNode = firstNode?.next
+    } else {
+        mergedList.head = secondNode
+        secondNode = secondNode?.next
     }
+
+    mergedList.tail = mergedList.head
+
+    while firstNode != nil && secondNode != nil {
+        if firstNode!.value < secondNode!.value {
+            mergedList.tail!.next = firstNode
+            firstNode = firstNode?.next
+        } else {
+            mergedList.tail!.next = secondNode
+            secondNode = secondNode?.next
+        }
+        mergedList.tail = mergedList.tail!.next
+    }
+
+    if firstNode != nil {
+        mergedList.tail!.next = firstNode
+    }
+
+    if secondNode != nil {
+        mergedList.tail!.next = secondNode
+    }
+
+    print(mergedList)
 }
+
+exercise4()
+
 /*
  Challenge 5: Remove all occurrences
  Create a function that removes all occurrences of a specific element from a linked
@@ -486,3 +511,29 @@ func exercise4() {
  // list after removing all occurrences of 3
  1 -> 4
  */
+
+func exercise5() {
+    var list: LinkedList = [1, 3, 3, 3, 4]
+
+    while list.head?.value == 3 {
+        list.head = list.head?.next
+    }
+
+    var current = list.head
+    var prev = list.head
+
+
+    while current != nil {
+        if current?.value == 3  {
+            prev?.next = current?.next
+        } else {
+            prev = current
+        }
+        current = current?.next
+    }
+
+    print("\n\n\n")
+    print(list)
+}
+
+exercise5()
