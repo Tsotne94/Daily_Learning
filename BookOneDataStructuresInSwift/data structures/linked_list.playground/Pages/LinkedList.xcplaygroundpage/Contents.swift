@@ -363,22 +363,20 @@ extension LinkedList {
  1
  */
 
+func printInReverse<T>(_ node: Node<T>?) {
+    guard let node else { return }
+    printInReverse(node.next)
+    print(node.value)
+}
+
+func printInReverse<T>(_ linkedList: LinkedList<T>) {
+    printInReverse(linkedList.head)
+}
+
 func exercise1() {
     print("\n\n\n\n")
     var originalList: LinkedList = [1, 2, 3, 4, 5, 7]
-    var newList: LinkedList<Int> = []
-
-    var oldValue: Node<Int>?
-    oldValue = originalList.head
-
-    while let element = oldValue {
-        newList.push(element.value)
-        oldValue = oldValue!.next
-    }
-
-    while let element = newList.pop() {
-        print(element)
-    }
+    printInReverse(originalList)
 }
 
 exercise1()
